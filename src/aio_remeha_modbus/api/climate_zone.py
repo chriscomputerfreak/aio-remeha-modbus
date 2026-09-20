@@ -293,6 +293,12 @@ class ClimateZone(RemehaComponent):
     _temporary_room_setpoint_end_time = nullable_binary(address=978, count=3, writable=True)
     """End time of temporary room setpoint override"""
 
+    flow_temperature = int16(address=1100, scale=0.01, unit="°C")
+    """The current flow water temperature of the zone.
+
+    For a domestic hot water zone this is the outgoing DHW temperature.
+    """
+
     room_temperature = int16(address=1104, scale=0.1, unit="°C")
     """The current room temperature"""
 
