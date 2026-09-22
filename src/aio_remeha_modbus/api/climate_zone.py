@@ -279,6 +279,15 @@ class ClimateZone(RemehaComponent):
     dhw_reduced_setpoint = uint16(address=666, scale=0.01, writable=True, unit="°C")
     """The setpoint for DHW in reduced (eco) mode"""
 
+    heating_curve_slope = uint8(address=674, scale=0.1, writable=True)
+    """The slope of the heating curve of the zone"""
+
+    heating_curve_base_comfort = uint16(address=675, scale=0.1, writable=True, unit="°C")
+    """The heating curve base temperature in comfort mode. 15 °C means off."""
+
+    heating_curve_base_reduced = uint16(address=676, scale=0.1, writable=True, unit="°C")
+    """The heating curve base temperature in reduced mode. 15 °C means off."""
+
     dhw_calorifier_hysteresis = uint16(address=686, scale=0.01, writable=True, unit="°C")
     """Hysteresis to start DHW tank load"""
 
