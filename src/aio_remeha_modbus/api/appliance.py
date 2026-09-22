@@ -346,10 +346,10 @@ class Appliance(RemehaComponent):
     flow_rate = uint16(address=410, scale=0.01, unit="L/min")
     """The current flow rate in L/min."""
 
-    status = enum(address=411, enum_type=ApplianceStatus, nan=0xFF)
+    appliance_status = enum(address=411, enum_type=ApplianceStatus, nan=0xFF)
     """The current appliance status (parameter AM012)."""
 
-    substatus = enum(address=412, enum_type=ApplianceSubStatus)
+    appliance_substatus = enum(address=412, enum_type=ApplianceSubStatus)
     """The current appliance substatus. Shows details about the current status (parameter AM014)."""
 
     actual_relative_power = uint16(address=413, scale=0.01, unit="%")
@@ -448,7 +448,7 @@ class Appliance(RemehaComponent):
     def is_cooling_required(self) -> bool:
         """Whether the appliance cooling mode is required.
 
-        This can be forced (`cooling_forced == True`) or derived (`season_mode` is in a summer variant).
+        This can be forced (`forced_cooling_mode == True`) or derived (`season_mode` is in a summer variant).
         """
 
         return self.forced_cooling_mode or self.season_mode in [

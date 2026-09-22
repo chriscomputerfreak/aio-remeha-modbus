@@ -19,7 +19,7 @@ from aio_remeha_modbus.api.climate_zone import (
     ClimateZoneType,
 )
 from aio_remeha_modbus.api.const import REMEHA_MAX_SPAN, Weekday
-from aio_remeha_modbus.api.main_control_monitoring import ApplianceErrorPriority, ApplianceStatus
+from aio_remeha_modbus.api.main_control_monitoring import ApplianceErrorPriority, MonitoringStatus
 from aio_remeha_modbus.api.schedule import (
     Timeslot,
     TimeslotActivity,
@@ -66,6 +66,7 @@ async def test_read_zone(remeha_api):
     assert zone.dhw_comfort_setpoint is None
     assert zone.dhw_reduced_setpoint is None
     assert zone.dhw_tank_temperature is None
+    assert zone.flow_temperature == 25.0
     assert zone.function == ClimateZoneFunction.MIXING_CIRCUIT
     assert zone.heating_curve_slope == 0.5
     assert zone.heating_curve_base_comfort == 20.0
@@ -130,15 +131,15 @@ async def test_read_appliance(remeha_api: RemehaApi):
     assert appliance.silent_mode_start_time == time(hour=22)
     assert appliance.silent_mode_end_time == time(hour=7)
 
-    assert ctrl_monitoring.status is not None
-    status: ApplianceStatus = ctrl_monitoring.status
+    assert ctrl_monitoring.monitoring_status is not None
+    status: MonitoringStatus = ctrl_monitoring.monitoring_status
 
     assert (
         status
-        == ApplianceStatus.SERVICE_REQUIRED
-        | ApplianceStatus.WATER_PRESSURE_LOW
-        | ApplianceStatus.APPLIANCE_PUMP_ON
-        | ApplianceStatus.COOLING_ACTIVE
+        == MonitoringStatus.SERVICE_REQUIRED
+        | MonitoringStatus.WATER_PRESSURE_LOW
+        | MonitoringStatus.APPLIANCE_PUMP_ON
+        | MonitoringStatus.COOLING_ACTIVE
     )
 
 
